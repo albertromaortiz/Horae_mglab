@@ -1,8 +1,8 @@
 <footer class="main-footer">
   <!-- To the right -->
   <div class="pull-right hidden-xs">
-    Anything you want
+  <strong>Version</strong> 0.0.1
   </div>
   <!-- Default to the left -->
-  <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+  <strong>copyright &copy; 2017 <a href="http://www.mglab.es">mg.lab</a></strong> all rights reserved.
 </footer>
