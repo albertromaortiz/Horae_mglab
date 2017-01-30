@@ -15,14 +15,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+    return view('admin.test');
+});
+
+
+
+
+
+Auth::routes();
 
 // admin
 
 Route::group(['prefix' => 'admin'], function () {
 
   Route::get('/', function () {
-      return view('admin.index');
+      return view('admin.test');
   });
 
 
 });
+
+Route::get('/home', 'HomeController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
