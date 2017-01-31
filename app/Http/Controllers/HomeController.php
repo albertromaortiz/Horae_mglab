@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -11,10 +12,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -23,6 +20,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      switch (Auth::user()->role_id) {
+        case '1':
+            return view('admin.homemaster');
+          break;
+
+          case '2':
+              return view('admin.homeusers');
+            break;
+
+        default:
+              return view('admin.home');
+          break;
+      }
+
+    }
+
+
+    public function list()
+    {
+        return view('admin.list');
     }
 }

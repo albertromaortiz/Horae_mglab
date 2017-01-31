@@ -16,11 +16,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/AdminLTE.min.css') }}">
-    
-    @if(config('adminlte.plugins.datatables'))
+
+    {{-- @if(config('adminlte.plugins.datatables'))
         <!-- DataTables -->
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-    @endif
+    @endif --}}
 
     @yield('adminlte_css')
 
@@ -35,10 +35,10 @@
 
 <script src="{{ asset('vendor/adminlte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
-@if(config('adminlte.plugins.datatables'))
+{{-- @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->
     <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-@endif
+@endif --}}
 
 @yield('adminlte_js')
 

@@ -15,29 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('admin.test');
-});
-
-
-
-
-
 Auth::routes();
 
 // admin
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin' , 'middleware' => 'auth'], function () {
 
-  Route::get('/', function () {
-      return view('admin.test');
-  });
+
+Route::get('/', 'HomeController@index');
+
+Route::get('/list', 'HomeController@list');
 
 
 });
-
-Route::get('/home', 'HomeController@index');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
