@@ -18,27 +18,43 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+  // páginas plantilla
+
     public function index()
     {
-      switch (Auth::user()->role_id) {
-        case '1':
-            return view('admin.homemaster');
-          break;
-
-          case '2':
-              return view('admin.homeusers');
-            break;
-
-        default:
-              return view('admin.home');
-          break;
-      }
-
+    return view('admin.dashboard');
     }
 
-
-    public function list()
+    public function list_usuarios()
     {
-        return view('admin.list');
+        return view('admin.list_usuarios');
     }
+
+    public function form_usuarios()
+    {
+        return view('admin.form_usuarios');
+    }
+
+    public function list_clientes()
+    {
+        return view('admin.list_clientes');
+    }
+
+    public function list_proyectos()
+    {
+        return view('admin.list_proyectos');
+    }
+
+    public function list_tareas()
+    {
+        return view('admin.list_tareas');
+    }
+
+    public function form()
+    {
+        return view('admin.form');
+    }
+
+
 }
