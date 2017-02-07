@@ -15,7 +15,7 @@ class CreateTasksTable extends Migration
      {
        Schema::create('tasks', function (Blueprint $table) {
            $table->increments('id');
-           $table->integer('id_project');
+           $table->integer('project_id');
            $table->string('titulo_tarea')->nullable();
            $table->date('fechaentrega_tarea')->nullable();
            $table->string('estado_tarea')->default('en cola');
@@ -24,7 +24,7 @@ class CreateTasksTable extends Migration
            $table->timestamps();
        });
 
-       Schema::create('user_task', function (Blueprint $table) {
+       Schema::create('task_user', function (Blueprint $table) {
            $table->integer('user_id')->unsigned()->index();
            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

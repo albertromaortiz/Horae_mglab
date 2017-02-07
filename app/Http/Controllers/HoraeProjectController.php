@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Customer;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
 
@@ -15,8 +17,9 @@ class HoraeProjectController extends Controller
    */
   public function index()
   {
+    $customers = Customer::all();
     $projects = Project::all();
-    return view('admin.projects.list_projects', compact('projects'));
+    return view('admin.projects.list_projects', compact('projects', 'customers'));
   }
 
   /**
@@ -26,7 +29,10 @@ class HoraeProjectController extends Controller
    */
   public function create()
   {
-    return view('admin.projects.form_ins_projects');
+    $customers = Customer::pluck( 'nombre_cliente', 'id');
+    $users = User::pluck( 'name', 'id');
+
+    return view('admin.projects.form_ins_projects', compact('customers', 'users'));
   }
 
   /**
@@ -41,12 +47,17 @@ class HoraeProjectController extends Controller
 
     $project = new project;
 
-    $project->codigo_cliente = $request->codigo_cliente;
-    $project->nombre_cliente = $request->nombre_cliente;
-    $project->email_cliente = $request->email_cliente;
-    $project->telefono_cliente = $request->telefono_cliente;
-    $project->contacto_cliente = $request->contacto_cliente;
-    $project->slug = Str::slug($request->nombre_cliente);
+    $project->customer_id = $request->customer_id;
+    $project->user_id = $request->user_id;
+    $project->titulo_proyecto = $request->titulo_proyecto;
+
+    $CodigoClienteSeleccionado = Customer::where('id', $request->customer_id)->first();
+
+    $project->codigo_proyecto = $CodigoClienteSeleccionado->codigo_cliente . '_' .$request->titulo_proyecto;
+    $project->estado_proyecto = $request->estado_proyecto;
+    $project->fechaentrega_proyecto = $request->fechaentrega_proyecto;
+    $project->comentario_proyecto = $request->comentario_proyecto;
+    $project->slug = Str::slug($CodigoClienteSeleccionado->codigo_cliente . '_' .$request->titulo_proyecto);
     $project->save();
 
     return redirect('admin/projects');
@@ -70,10 +81,11 @@ class HoraeProjectController extends Controller
    * @param  \App\Customer  $customer
    * @return \Illuminate\Http\Response
    */
-  public function edit(Customer $project)
+  public function edit(Project $project)
   {
-
-    return view('admin.projects.form_edit_projects')->withProject($project);
+    $customers = Customer::pluck( 'nombre_cliente', 'id');
+    $users = User::pluck( 'name', 'id');
+    return view('admin.projects.form_edit_projects', compact('customers', 'users'))->withProject($project);
   }
 
   /**
@@ -87,15 +99,21 @@ class HoraeProjectController extends Controller
   {
 
 
-    $project->codigo_cliente = $request->codigo_cliente;
-    $project->nombre_cliente = $request->nombre_cliente;
-    $project->email_cliente = $request->email_cliente;
-    $project->telefono_cliente = $request->telefono_cliente;
-    $project->contacto_cliente = $request->contacto_cliente;
-    $project->slug = Str::slug($request->nombre_cliente);
+    $project->customer_id = $request->customer_id;
+    $project->user_id = $request->user_id;
+    $project->titulo_proyecto = $request->titulo_proyecto;
+
+    $CodigoClienteSeleccionado = Customer::where('id', $request->customer_id)->first();
+
+    $project->codigo_proyecto = $CodigoClienteSeleccionado->codigo_cliente . '_' .$request->titulo_proyecto;
+    $project->estado_proyecto = $request->estado_proyecto;
+    $project->fechaentrega_proyecto = $request->fechaentrega_proyecto;
+    $project->comentario_proyecto = $request->comentario_proyecto;
+    $project->slug = Str::slug($CodigoClienteSeleccionado->codigo_cliente . '_' .$request->titulo_proyecto);
     $project->save();
 
-    return redirect('admin/customers');
+    return redirect('admin/projects');
+
   }
 
   /**
@@ -107,6 +125,7 @@ class HoraeProjectController extends Controller
   public function destroy(Project $project)
   {
     $project->delete();
+    $project->tasks()->delete();
     return redirect('admin/projects');
   }
 }

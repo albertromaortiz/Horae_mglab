@@ -3,11 +3,11 @@
 @section('content_header')
   <h1>
     Editar
-    <small>Usuario</small>
+    <small>Proyectos</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Usuarios</li>
+    <li class="active">Proyectos</li>
   </ol>
 @stop
 
@@ -19,66 +19,81 @@
 
             <!-- /.box-header -->
             <!-- form start -->
-          {{ Form::model($customer, ['route' => ['customers.update', $customer],'method' => 'PATCH','files' => true ])}}
+          {{ Form::model($project, ['route' => ['projects.update', $project],'method' => 'PATCH','files' => true ])}}
 
 
 
-                        <div class="box-body">
+          <div class="box-body">
 
 
-                          <div class="form-group">
+            <div class="form-group">
 
-                            {{Form::label('codigo_cliente', 'Codigo Cliente')}}
-                            {{Form::text('codigo_cliente', null, ['class' => 'form-control' ,'placeholder' => 'XXX'])}}
-                            <p class="help-block">Ojo!! tienen que ser tres letras en mayuscula.</p>
+              {{Form::label('customer_id', 'Cliente')}}
+              {{Form::select('customer_id', $customers, null, ['class' => 'form-control', 'placeholder'=>'selecciona un cliente'])}}
 
-                          </div>
+            </div>
 
-                          <div class="form-group">
+            <div class="form-group">
 
-                            {{Form::label('nombre_cliente', 'Nombre Cliente')}}
-                            {{Form::text('nombre_cliente', null, ['class' => 'form-control' ,'placeholder' => 'Nombre cliente'])}}
+              {{Form::label('user_id', 'Responsable en mg.lab')}}
+              {{Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder'=>'selecciona un responsable'])}}
 
-                          </div>
+            </div>
 
 
-                          <div class="form-group">
+            <div class="form-group">
 
-                            {{Form::label('email_cliente', 'E-Mail')}}
-                            {{Form::email('email_cliente', null, ['class' => 'form-control' ,'placeholder' => 'Email del cliente'])}}
+              {{Form::label('titulo_proyecto', 'Nombre de Proyecto')}}
+              {{Form::text('titulo_proyecto', null, ['class' => 'form-control' ,'placeholder' => 'Nombre de Proyecto'])}}
 
-                          </div>
 
-                          <div class="form-group">
-
-                            {{Form::label('telefono_cliente', 'Teléfono')}}
-                            {{Form::text('telefono_cliente', null, ['class' => 'form-control'])}}
-
-                          </div>
-
-                          <div class="form-group">
-
-                            {{Form::label('contacto_cliente', 'Persona de contacto')}}
-                            {{Form::text('contacto_cliente', null, ['class' => 'form-control' ,'placeholder' => 'Persona de contacto'])}}
-
-                          </div>
+            </div>
 
 
 
-                          {{-- <div class="form-group">
-
-                            {{Form::label('logotipo_cliente', 'Logotipo')}}
-                            {{Form::file('logotipo_cliente', null, ['class' => 'form-control'])}}
-                              <p class="help-block">A ver este logo!</p>
-                        </div> --}}
+            {{Form::label('fechaentrega_proyecto', 'Fecha de entrega')}}
 
 
-                        </div>
-                        <!-- /.box-body -->
+            <div class="form-group">
 
-                        <div class="box-footer">
-                          <button type="submit" class="btn btn-default">Editar</button>
-                        </div>
+              <div class="input-group date">
+
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+
+                {{Form::text('fechaentrega_proyecto', null, ['class' => 'form-control pull-right' , 'id' => 'fechaentrega_proyecto',])}}
+
+              </div>
+
+            </div>
+
+
+
+
+            <div class="form-group">
+
+              {{Form::label('estado_proyecto', 'Estado de proyecto')}}
+              {{Form::select('estado_proyecto',  ['1' => 'En proceso', '2' => 'En espera',  '3' => 'Para Facturar',  '4' => 'Cerrado'], null, ['class' => 'form-control'])}}
+
+            </div>
+
+            <div class="form-group">
+
+              {{Form::label('comentario_proyecto', 'Comentarios')}}
+              {{Form::textarea('comentario_proyecto', null, ['class' => 'form-control' ,'placeholder' => 'Comentários sobre el Proyecto'])}}
+
+            </div>
+
+
+
+
+          </div>
+          <!-- /.box-body -->
+
+          <div class="box-footer">
+            <button type="submit" class="btn btn-default">Editar</button>
+          </div>
 
                       {!! Form::close() !!}
 
@@ -92,8 +107,33 @@
 
 @section('css')
 
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="{{asset('vendor/adminlte/plugins/datepicker/datepicker3.css')}}">
+
+
+
 @stop
 
 @section('js')
+
+<!-- bootstrap datepicker -->
+<script src="{{asset('vendor/adminlte/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+
+<!-- Languaje -->
+   <script src="{{asset('vendor/adminlte/plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
+
+
+<script type="text/javascript">
+
+//Date picker
+$('#fechaentrega_proyecto').datepicker({
+  autoclose: true,
+  language: 'es',
+  format: "yy-mm-dd",
+});
+
+</script>
+
+
 
 @stop

@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 
+use App\User;
+use App\Customer;
+use App\Project;
+use App\Task;
+
 class HomeController extends Controller
 {
     /**
@@ -23,38 +28,15 @@ class HomeController extends Controller
 
     public function index()
     {
-    return view('admin.dashboard');
+    $yo = Auth::user();
+    $users = User::all();
+    $customers = Customer::all();
+    $projects = Project::all();
+    $tasks = Task::all();
+
+    return view('admin.dashboard', compact('users', 'customers', 'projects', 'tasks', 'yo'));
     }
 
-    public function list_usuarios()
-    {
-        return view('admin.list_usuarios');
-    }
-
-    public function form_usuarios()
-    {
-        return view('admin.form_usuarios');
-    }
-
-    public function list_clientes()
-    {
-        return view('admin.list_clientes');
-    }
-
-    public function list_proyectos()
-    {
-        return view('admin.list_proyectos');
-    }
-
-    public function list_tareas()
-    {
-        return view('admin.list_tareas');
-    }
-
-    public function form()
-    {
-        return view('admin.form');
-    }
 
 
 }

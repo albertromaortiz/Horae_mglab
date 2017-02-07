@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth' ], function () {
             Route::resource('/users', 'HoraeUserController');
             Route::resource('/customers', 'HoraeCustomerController');
             Route::resource('/projects', 'HoraeProjectController');
+            Route::resource('/tasks', 'HoraeTaskController');
 
         //  Route::get('/list_usuarios', 'HomeController@list_usuarios');
         //    Route::get('/form_usuarios', 'HomeController@form_usuarios');

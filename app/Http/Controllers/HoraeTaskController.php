@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Project;
+use App\User;
+use users;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Str as Str;
 
 class HoraeTaskController extends Controller
 {
@@ -14,7 +19,9 @@ class HoraeTaskController extends Controller
      */
     public function index()
     {
-        //
+          $tasks = Task::all();
+
+          return view('admin.tasks.list_tasks', compact('tasks'));
     }
 
     /**
@@ -24,7 +31,9 @@ class HoraeTaskController extends Controller
      */
     public function create()
     {
-        //
+      $projects = Project::pluck( 'codigo_proyecto', 'id');
+      $users = User::pluck( 'name', 'id');
+      return view('admin.tasks.form_ins_tasks', compact('projects', 'users'));
     }
 
     /**
@@ -35,7 +44,22 @@ class HoraeTaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $task = new task;
+
+      $task->project_id = $request->project_id;
+      $task->titulo_tarea = $request->titulo_tarea;
+      $task->fechaentrega_tarea = $request->fechaentrega_tarea;
+      $task->estado_tarea = $request->estado_tarea;
+      $task->comentario_tarea = $request->comentario_tarea;
+
+      $CodigoProyectoSeleccionado = Project::where('id', $request->project_id)->first();
+
+      $task->slug = Str::slug($CodigoProyectoSeleccionado->codigo_proyecto . '_' .$request->titulo_tarea);
+      $task->save();
+
+      $task->users()->attach($request->input('user_id'));
+
+      return redirect('admin/tasks');
     }
 
     /**
@@ -57,8 +81,13 @@ class HoraeTaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+     $projects = Project::pluck( 'codigo_proyecto', 'id');
+     $users = User::pluck( 'name', 'id');
+     $myusers = $task->users->pluck('id')->ToArray();
+
+      return view('admin.tasks.form_edit_tasks', compact('projects', 'users', 'myusers'))->withTask($task);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +98,22 @@ class HoraeTaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+
+      $task->project_id = $request->project_id;
+      $task->titulo_tarea = $request->titulo_tarea;
+      $task->fechaentrega_tarea = $request->fechaentrega_tarea;
+      $task->estado_tarea = $request->estado_tarea;
+      $task->comentario_tarea = $request->comentario_tarea;
+
+      $CodigoProyectoSeleccionado = Project::where('id', $request->project_id)->first();
+
+      $task->slug = Str::slug($CodigoProyectoSeleccionado->codigo_proyecto . '_' .$request->titulo_tarea);
+      $task->save();
+
+      $task->users()->sync($request->input('user_id'));
+
+
+      return redirect('admin/tasks');
     }
 
     /**
@@ -80,6 +124,7 @@ class HoraeTaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+      $task->delete();
+      return redirect('admin/tasks');
     }
 }

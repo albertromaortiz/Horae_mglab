@@ -93,7 +93,8 @@ return [
 
     'login_url' => 'login',
 
-    'register_url' => 'register',
+    'register_url' => null,
+    //'register_url' => 'register',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,80 +109,106 @@ return [
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
+        'NAVEGACIÓN',
+
         [
-            'text' => 'Blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text'        => 'Inicio',
+            'url'         => 'admin/',
+            'icon'        => 'home',
+
         ],
         [
-            'text'        => 'Pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        'ACCOUNT SETTINGS',
-        [
-            'text' => 'Profile',
-            'url'  => 'admin/settings',
-            'icon' => 'user',
+            'text'        => 'Usuarios',
+            'url'         => 'admin/users',
+            'icon'        => 'users',
+
         ],
         [
-            'text' => 'Change Password',
-            'url'  => 'admin/settings',
-            'icon' => 'lock',
+            'text'        => 'Clientes',
+            'url'         => 'admin/customers',
+            'icon'        => 'dot-circle-o',
+
         ],
         [
-            'text'    => 'Multilevel',
-            'icon'    => 'share',
-            'submenu' => [
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        'LABELS',
-        [
-            'text'       => 'Important',
-            'icon_color' => 'red',
+            'text'        => 'Proyectos',
+            'url'         => 'admin/projects',
+            'icon'        => 'folder-open',
+
         ],
         [
-            'text'       => 'Warning',
-            'icon_color' => 'yellow',
+            'text'        => 'Tareas',
+            'url'         => 'admin/tasks',
+            'icon'        => 'building-o',
+
+
+        ],
+        // 'ACCOUNT SETTINGS',
+        // [
+        //     'text' => 'Profile',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'user',
+        // ],
+        // [
+        //     'text' => 'Change Password',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'lock',
+        // ],
+        // [
+        //     'text'    => 'Multilevel',
+        //     'icon'    => 'share',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Level One',
+        //             'url'  => '#',
+        //         ],
+        //         [
+        //             'text'    => 'Level One',
+        //             'url'     => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text' => 'Level Two',
+        //                     'url'  => '#',
+        //                 ],
+        //                 [
+        //                     'text'    => 'Level Two',
+        //                     'url'     => '#',
+        //                     'submenu' => [
+        //                         [
+        //                             'text' => 'Level Three',
+        //                             'url'  => '#',
+        //                         ],
+        //                         [
+        //                             'text' => 'Level Three',
+        //                             'url'  => '#',
+        //                         ],
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //         [
+        //             'text' => 'Level One',
+        //             'url'  => '#',
+        //         ],
+        //     ],
+        // ],
+        'ACCESO RÁPIDO',
+        [
+            'text'       => 'Añadir Clientes',
+            'icon'    => 'plus',
+            'icon_color' => 'purple',
+            'url'  => '/admin/customers/create',
         ],
         [
-            'text'       => 'Information',
-            'icon_color' => 'aqua',
+            'text'       => 'Añadir Proyectos',
+            'icon'    => 'plus',
+            'icon_color' => 'orange',
+            'url'  => '/admin/projects/create',
+        ],
+        [
+            'text'       => 'Añadir Tareas',
+            'icon'    => 'plus',
+            'icon_color' => 'green',
+            'url'  => '/admin/tasks/create',
         ],
     ],
 

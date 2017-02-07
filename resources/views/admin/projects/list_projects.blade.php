@@ -38,9 +38,19 @@
 @foreach ($projects as $project)
 
   <tr>
-    <td>{{$project->id_customer}}</td>
+    <td>{{$project->codigo_proyecto}}</td>
     <td>{{$project->fechaentrega_proyecto}}</td>
-    <td>{{$project->estado_proyecto}}</td>
+    <td>{{$project->user->name}}</td>
+
+@if ($project->estado_proyecto == 1)
+   <td><small class="label bg-green">En proceso</small></td>
+ @elseif ($project->estado_proyecto == 2)
+      <td><small class="label bg-orange">En espera</small></td>
+    @elseif ($project->estado_proyecto == 3)
+        <td><small class="label bg-purple">Para Facturar</small></td>
+      @elseif ($project->estado_proyecto == 4)
+          <td><small class="label bg-red">Cerrado</small></td>
+@endif
     <td>{{ link_to_route('projects.edit', 'Editar', array($project), array('class' => 'btn btn btn-warning btn-xs')) }}
         {{ Form::open(array('method'=> 'DELETE', 'route' => array('projects.destroy', $project),'style'=>'display:inline')) }}
         {{ Form::submit('Eliminar', array('class' => 'btn btn btn-danger btn-xs')) }}

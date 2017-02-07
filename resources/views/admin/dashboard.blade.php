@@ -19,9 +19,9 @@
   <div class="row">
     <div class="col-lg-3 col-xs-6">
       <!-- small box -->
-      <div class="small-box bg-gray">
+      <div class="small-box bg-primary">
         <div class="inner">
-          <h3>000</h3>
+          <h3>{{ $users->count() }}</h3>
 
           <p>Usuarios</p>
         </div>
@@ -34,9 +34,9 @@
 
     <div class="col-lg-3 col-xs-6">
       <!-- small box -->
-      <div class="small-box bg-gray">
+      <div class="small-box bg-purple">
         <div class="inner">
-          <h3>000</h3>
+          <h3>{{ $customers->count() }}</h3>
 
           <p>Clientes</p>
         </div>
@@ -49,9 +49,9 @@
 
     <div class="col-lg-3 col-xs-6">
       <!-- small box -->
-      <div class="small-box bg-gray">
+      <div class="small-box bg-orange">
         <div class="inner">
-          <h3>000</h3>
+          <h3>{{ $projects->count() }}</h3>
 
           <p>Proyectos
           </p>
@@ -65,16 +65,16 @@
 
     <div class="col-lg-3 col-xs-6">
       <!-- small box -->
-      <div class="small-box bg-gray">
+      <div class="small-box bg-green">
         <div class="inner">
-          <h3>000</h3>
+          <h3>{{ $tasks->count() }}</h3>
 
           <p>Tareas</p>
         </div>
         <div class="icon">
           <i class="ion ion-clipboard"></i>
         </div>
-        <a href="admin/list_tareas" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+        <a href="admin/tasks" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
 
@@ -85,36 +85,90 @@
   <!-- /.row -->
 
 
+        <div class="row">
+  <div class="col-md-6">
+  <div class="box box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Mis tareas</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <div class="table-responsive">
+                  <table class="table no-margin">
+                    <thead>
+                    <tr>
+                      <th>Proyecto</th>
+                      <th>Tarea</th>
+                      <th>Fecha</th>
+                      <th>Estado</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                      @foreach ($yo->tasks()->orderBy('fechaentrega_tarea', 'asc')->get() as $task)
 
 
-  <div class="row">
 
-      <div class="col-md-12">
-        <div class="box box-solid">
-          <div class="box-header with-border">
-            <i class="fa fa-quote-left"></i>
+                      <tr>
+                        <td>{{$task->project->codigo_proyecto}}</td>
+                        <td>{{$task->titulo_tarea}}</td>
+                        <td>{{$task->fechaentrega_tarea}}</td>
+                        @if ($task->estado_tarea == 1)
+                           <td><small class="label bg-green">En proceso</small></td>
+                         @elseif ($task->estado_tarea == 2)
+                              <td><small class="label bg-orange">En espera</small></td>
+                            @elseif ($task->estado_tarea == 3)
+                                <td><small class="label bg-purple">En producción</small></td>
+                              @elseif ($task->estado_tarea == 4)
+                                  <td><small class="label bg-red">Cerrado</small></td>
+                        @endif
+                      </tr>
 
-            <h3 class="box-title">La Frase del dia!</h3>
+                      @endforeach
+
+
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer clearfix">
+                <a href="admin/tasks/create" class="btn btn-sm btn-success btn-flat pull-left">Nueva tarea</a>
+              </div>
+              <!-- /.box-footer -->
+            </div>
           </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <blockquote>
-              <p>"Según vamos adquiriendo conocimiento, las cosas no se hacen más comprensibles, sino más misteriosas"</p>
-              <small>Autor: <cite title="Source Title">Albert Schweitzer</cite></small>
-            </blockquote>
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-      </div>
-      <!-- ./col -->
+
+
+
+
+                <div class="col-md-6">
+                  <div class="box box">
+                    <div class="box-header with-border">
+                      <i class="fa fa-quote-left"></i>
+
+                      <h3 class="box-title">La Frase del dia!</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <blockquote>
+                        <p>"Según vamos adquiriendo conocimiento, las cosas no se hacen más comprensibles, sino más misteriosas"</p>
+                        <small>Autor: <cite title="Source Title">Albert Schweitzer</cite></small>
+                      </blockquote>
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <!-- /.box -->
+                </div>
+                <!-- ./col -->
 
 
 
 
 
 
-  </div>
-  <!-- /.row (main row) -->
+            </div>
+            <!-- /.row (main row) -->
 
 @stop
