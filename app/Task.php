@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+
+  protected $dates = ['fechaentrega_tarea'];
+
   public function project()
       {
           return $this->belongsTo('App\Project');

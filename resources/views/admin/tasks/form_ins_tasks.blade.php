@@ -77,7 +77,7 @@
                 <div class="form-group">
 
                   {{Form::label('estado_tarea', 'Estado de tarea')}}
-                  {{Form::select('estado_tarea',  ['1' => 'En proceso', '2' => 'En espera',  '3' => 'En producción',  '4' => 'Cerrado'], null, ['class' => 'form-control'])}}
+                  {{Form::select('estado_tarea',  ['1' => 'En proceso', '2' => 'En espera',  '3' => 'En producción',  '4' => 'Cerrado',  '5' => 'Cliente',  '6' => 'Por hacer'], null, ['class' => 'form-control'])}}
 
                 </div>
 
@@ -147,7 +147,7 @@
 $('#fechaentrega_tarea').datepicker({
   autoclose: true,
   language: 'es',
-  format: "yy-mm-dd",
+  format: "yyyy-mm-dd",
 });
 
 </script>

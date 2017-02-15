@@ -41,7 +41,7 @@
   <tr>
     <td>{{$task->project->codigo_proyecto}}</td>
     <td>{{$task->titulo_tarea}}</td>
-    <td>{{$task->fechaentrega_tarea}}</td>
+    <td>{{$task->fechaentrega_tarea->toDateString()}}</td>
       <td>
         @foreach ($task->users as $taski)
           {{$taski->name}}
@@ -57,6 +57,10 @@
         <td><small class="label bg-purple">En producción</small></td>
       @elseif ($task->estado_tarea == 4)
           <td><small class="label bg-red">Cerrado</small></td>
+        @elseif ($task->estado_tarea == 5)
+            <td><small class="label bg-blue">Cliente</small></td>
+          @elseif ($task->estado_tarea == 6)
+              <td><small class="label bg-yellow">Por hacer</small></td>
 @endif
     <td>{{ link_to_route('tasks.edit', 'Editar', array($task), array('class' => 'btn btn btn-warning btn-xs')) }}
         {{ Form::open(array('method'=> 'DELETE', 'route' => array('tasks.destroy', $task),'style'=>'display:inline')) }}
@@ -110,6 +114,9 @@
         "info": true,
         "stateSave": true,
         "responsive": true,
+        "pageLength": 50,
+        "displayLength": 50,
+
 
 
 

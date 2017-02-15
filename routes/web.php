@@ -32,15 +32,12 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth' ], function () {
             Route::resource('/projects', 'HoraeProjectController');
             Route::resource('/tasks', 'HoraeTaskController');
 
-        //  Route::get('/list_usuarios', 'HomeController@list_usuarios');
-        //    Route::get('/form_usuarios', 'HomeController@form_usuarios');
-        //  Route::get('/list_clientes', 'HomeController@list_clientes');
-
-      Route::get('/list_proyectos', 'HomeController@list_proyectos');
-
-      Route::get('/list_tareas', 'HomeController@list_tareas');
-
-      Route::get('/form', 'HomeController@form');
+        //   Route::get('/list_usuarios', 'HomeController@list_usuarios');
+        //   Route::get('/form_usuarios', 'HomeController@form_usuarios');
+        //   Route::get('/list_clientes', 'HomeController@list_clientes');
+        //   Route::get('/list_proyectos', 'HomeController@list_proyectos');
+        //   Route::get('/list_tareas', 'HomeController@list_tareas');
+        //   Route::get('/form', 'HomeController@form');
 
 
 
