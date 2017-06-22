@@ -33,22 +33,26 @@ class HomeController extends Controller
     {
     $yo = Auth::user();
     $users = User::all();
-    $customers = Customer::all();
-    $projects = Project::all();
-    $tasks = Task::all();
+    $customers = Customer::where('role_id','=',Auth::user()->role_id)->get();
+    $projects = Project::where('role_id','=',Auth::user()->role_id)->get();
+    $tasks = Task::where('role_id','=',Auth::user()->role_id)->where('estado_tarea','!=',4)->get();
 
-    $fechadehoy = Carbon::now();
-    $estasemana = new Carbon('next friday');
+    $fechadehoy = Carbon::now('Europe/Madrid');
+    $fechayesterday = Carbon::yesterday('Europe/Madrid');
+
+
+    $estasemana = new Carbon('next sunday');
 
 
 
     $tareassemana=  $yo->tasks()->where('fechaentrega_tarea','<=', $estasemana)->where('estado_tarea','!=',4)->get();
     $tareasparamastarde=  $yo->tasks()->where('fechaentrega_tarea','>', $estasemana)->where('estado_tarea','!=',4)->get();
+    $tareascalendario=  $yo->tasks()->where('estado_tarea','!=',4)->get();
 
 
 
 
-    return view('admin.dashboard', compact('users', 'customers', 'projects', 'tasks', 'yo', 'fechadehoy', 'estasemana', 'tareassemana', 'tareasparamastarde'));
+    return view('admin.dashboard', compact('users', 'customers', 'projects', 'tasks', 'yo', 'fechadehoy', 'estasemana', 'tareassemana', 'tareasparamastarde', 'tareascalendario', 'fechayesterday'));
     }
 
 

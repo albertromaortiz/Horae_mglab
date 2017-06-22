@@ -142,6 +142,14 @@ return [
 
 
         ],
+
+        [
+            'text'        => 'Calendario',
+            'url'         => 'admin/calendar',
+            'icon'        => 'fa fa-calendar',
+
+
+        ],
         // 'ACCOUNT SETTINGS',
         // [
         //     'text' => 'Profile',

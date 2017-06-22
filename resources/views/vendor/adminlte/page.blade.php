@@ -58,16 +58,36 @@
 
                     <ul class="nav navbar-nav">
 
+                    
+
+                        <li>
+                                <a href="">
+                                    <i class="fa fa-fw fa-calendar"></i>{{Carbon::now()->format('l')}}<strong> {{Carbon::now()->format('d-m-y')}}</strong>
+                                </a>
+                        </li>
+                        <li>
+
+                        <a href="">
+                            <i class="fa fa-fw fa-clock-o"></i><strong><span id="liveclock"></span></strong>
+                        </a>
+                      </li>
+
+
                     <!-- User Account: style can be found in dropdown.less -->
                       <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <img src="{{asset("bower_components/AdminLTE/dist/img/user2-160x160.jpg")}}" class="user-image" alt="User Image">
+                          <img src="/images/avatar/{{ isset(Auth::user()->avatar) ? Auth::user()->avatar : 'sinavatar.jpg' }}" class="user-image" alt="User Image">
+
+
+
+
                           <span class="hidden-xs">{{Auth::user()->name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                           <!-- User image -->
                           <li class="user-header">
-                            <img src="{{asset("bower_components/AdminLTE/dist/img/user2-160x160.jpg")}}" class="img-circle" alt="User Image">
+                            <img src="/images/avatar/{{ isset(Auth::user()->avatar) ? Auth::user()->avatar : 'sinavatar.jpg' }}" class="img-circle" alt="User Image">
+
 
 
                             <p>
@@ -134,7 +154,9 @@
           <!-- user panel (Optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="{{asset("bower_components/AdminLTE/dist/img/user2-160x160.jpg")}}" class="img-circle" alt="User Image">
+              <img src="/images/avatar/{{ isset(Auth::user()->avatar) ? Auth::user()->avatar : 'sinavatar.jpg' }}" class="img-circle" alt="User Image">
+
+
             </div>
             <div class="pull-left info">
               <p>{{Auth::user()->name}}</p>
@@ -196,6 +218,47 @@
 
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/app.min.js') }}"></script>
+
+    <script language="JavaScript" type="text/javascript">
+        function show5(){
+            if (!document.layers&&!document.all&&!document.getElementById)
+            return
+
+             var Digital=new Date()
+             var hours=Digital.getHours()
+             var minutes=Digital.getMinutes()
+             var seconds=Digital.getSeconds()
+
+            var dn="PM"
+            if (hours<12)
+            dn="AM"
+            if (hours>12)
+            hours=hours-12
+            if (hours==0)
+            hours=12
+
+             if (minutes<=9)
+             minutes="0"+minutes
+             if (seconds<=9)
+             seconds="0"+seconds
+            //change font size here to your desire
+            myclock=+hours+":"+minutes+":"
+             +seconds+" "+dn+"</b></font>"
+            if (document.layers){
+            document.layers.liveclock.document.write(myclock)
+            document.layers.liveclock.document.close()
+            }
+            else if (document.all)
+            liveclock.innerHTML=myclock
+            else if (document.getElementById)
+            document.getElementById("liveclock").innerHTML=myclock
+            setTimeout("show5()",1000)
+             }
+
+
+            window.onload=show5
+             //-->
+         </script>
     @stack('js')
     @yield('js')
 @stop

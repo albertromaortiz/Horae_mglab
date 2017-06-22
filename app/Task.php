@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
 
-  protected $dates = ['fechaentrega_tarea'];
+  protected $dates = ['fechaentrega_tarea', 'fechainicio_tarea'];
 
   public function project()
       {

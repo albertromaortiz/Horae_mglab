@@ -29,6 +29,8 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/admin';
 
+
+
     /**
      * Create a new controller instance.
      *
@@ -36,7 +38,11 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+
+    // comentado para descativar registro de usuarios
+    //  $this->middleware('guest');
+      Redirect::to('/login')->send();
+
     }
 
     /**

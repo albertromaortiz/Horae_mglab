@@ -5,6 +5,21 @@
     Editar
     <small>Tareas</small>
   </h1>
+
+  <div class="row">
+    <div class="col-md-12">
+        {{ Form::open(array('method'=> 'DELETE', 'route' => array('tasks.destroy', $task),'style'=>'display:inline')) }}
+        {{Form::hidden('previous', URL::previous())}}
+       <h2>{{ Form::submit('Eliminar', array('class' => 'btn btn-block btn-danger btn-xs')) }}  </h2>
+    </div>
+  </div>
+
+
+
+
+  {{ Form::close() }}
+
+
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Tareas</li>
@@ -50,6 +65,42 @@
                           </div>
 
 
+                          {{Form::label('fechainicio_tarea', 'Fecha de inicio')}}
+
+
+                          <div class="form-group">
+
+                            <div class="input-group date">
+
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+
+                              {{Form::text('fechainicio_tarea', $fechatareaoriginalinicio, ['class' => 'form-control pull-right' , 'id' => 'fechainicio_tarea',])}}
+
+                            </div>
+
+                          </div>
+
+                          <div class="form-group">
+                            <label>Hora de inicio:</label>
+
+                            <div class="input-group bootstrap-timepicker timepicker">
+
+                                {{Form::text('horanicio_tarea', $horatareaoriginalinicio, ['class' => 'form-control input-small' , 'id' => 'horanicio_tarea',])}}
+
+                              <div class="input-group-addon">
+                                <i class="fa fa-clock-o"></i>
+                              </div>
+                            </div>
+                            <!-- /.input group -->
+                          </div>
+
+
+
+
+
+
 
                           {{Form::label('fechaentrega_tarea', 'Fecha de entrega')}}
 
@@ -62,10 +113,24 @@
                                 <i class="fa fa-calendar"></i>
                               </div>
 
-                              {{Form::text('fechaentrega_tarea', null, ['class' => 'form-control pull-right' , 'id' => 'fechaentrega_tarea',])}}
+                              {{Form::text('fechaentrega_tarea', $fechatareaoriginalentrega, ['class' => 'form-control pull-right' , 'id' => 'fechaentrega_tarea',])}}
 
                             </div>
 
+                          </div>
+
+                          <div class="form-group">
+                            <label>Hora de entrega:</label>
+
+                            <div class="input-group bootstrap-timepicker timepicker">
+
+                                {{Form::text('horaentrega_tarea', $horatareaoriginalentrega, ['class' => 'form-control input-small' , 'id' => 'horaentrega_tarea',])}}
+
+                              <div class="input-group-addon">
+                                <i class="fa fa-clock-o"></i>
+                              </div>
+                            </div>
+                            <!-- /.input group -->
                           </div>
 
 
@@ -85,7 +150,7 @@
 
                           </div>
 
-
+                        {{Form::hidden('previous', URL::previous())}}
 
 
                         </div>
@@ -94,10 +159,13 @@
                         <div class="box-footer">
                           <button type="submit" class="btn btn-default">Editar</button>
                         </div>
-                      {!! Form::close() !!}
+
+
 
           </div>
           <!-- /.box -->
+          {!! Form::close() !!}
+
         </div>
       </div>
 
@@ -108,6 +176,10 @@
 
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="{{asset('vendor/adminlte/plugins/datepicker/datepicker3.css')}}">
+
+  <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="{{asset('vendor/adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
+
 
 
 
@@ -122,6 +194,9 @@
 
 <!-- bootstrap datepicker -->
 <script src="{{asset('vendor/adminlte/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+
+<!-- bootstrap time picker -->
+<script src="{{asset('vendor/adminlte/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 
 <!-- Languaje -->
    <script src="{{asset('vendor/adminlte/plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
@@ -141,11 +216,44 @@
 //Date picker
 $('#fechaentrega_tarea').datepicker({
   autoclose: true,
+  todayHighlight :true,
+  weekStart : 1,
   language: 'es',
   format: "yyyy-mm-dd",
 });
 
+
+//Date picker
+$('#fechainicio_tarea').datepicker({
+  autoclose: true,
+  todayHighlight :true,
+  weekStart : 1,
+  language: 'es',
+  format: "yyyy-mm-dd",
+});
 </script>
+
+<script type="text/javascript">
+//timepicker
+          $('#horanicio_tarea').timepicker(
+            {
+            showMeridian: false,
+             showSeconds: true,
+
+              }
+          );
+
+          $('#horaentrega_tarea').timepicker(
+            {
+            showMeridian: false,
+             showSeconds: true,
+
+              }
+          );
+
+
+
+      </script>
 
 
 

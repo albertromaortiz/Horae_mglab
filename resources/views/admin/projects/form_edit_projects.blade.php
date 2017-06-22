@@ -128,8 +128,10 @@
 //Date picker
 $('#fechaentrega_proyecto').datepicker({
   autoclose: true,
+  todayHighlight :true,
+  weekStart : 1,
   language: 'es',
-  format: "yy-mm-dd",
+  format: "yyyy-mm-dd",
 });
 
 </script>

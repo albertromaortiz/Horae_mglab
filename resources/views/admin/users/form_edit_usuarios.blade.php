@@ -41,12 +41,24 @@
 
                 </div>
 
-              {{-- <div class="form-group">
+
+                <div class="form-group">
+
+                  {{Form::label('role_id', 'Departamento')}}
+                  {{Form::select('role_id', $roles, null, ['class' => 'form-control', 'placeholder'=>'selecciona tu departamento'])}}
+
+                </div>
+
+              <div class="form-group">
 
                   {{Form::label('avatar', 'Avatar')}}
                   {{Form::file('avatar', null, ['class' => 'form-control' ,'placeholder' => 'tumail@mglab.es'])}}
-                    <p class="help-block">Queremos ponerte cara!</p>
-              </div> --}}
+                    <p class="help-block">esta es tu cara? ohhhhh!!!</p>
+
+
+                    <img src="/images/avatar/{{$user->avatar or 'sinavatar.jpg'}}" alt="">
+              </div>
+
 
 
 

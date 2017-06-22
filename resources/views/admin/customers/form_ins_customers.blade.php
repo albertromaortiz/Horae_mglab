@@ -63,7 +63,7 @@
 
                 </div>
 
-
+                  {{Form::hidden('role_id', Auth::user()->role_id)}}
 
                 {{-- <div class="form-group">
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
+use Auth;
 
 class HoraeCustomerController extends Controller
 {
@@ -15,7 +16,8 @@ class HoraeCustomerController extends Controller
      */
     public function index()
     {
-      $customers = Customer::all();
+
+      $customers = Customer::where('role_id','=',Auth::user()->role_id)->get();
       return view('admin.customers.list_customers', compact('customers'));
     }
 
@@ -26,7 +28,8 @@ class HoraeCustomerController extends Controller
      */
     public function create()
     {
-      return view('admin.customers.form_ins_customers');
+      $customers = Customer::where('role_id','=',Auth::user()->role_id)->get();
+      return view('admin.customers.form_ins_customers', compact('customers'));
     }
 
     /**
@@ -46,6 +49,7 @@ class HoraeCustomerController extends Controller
       $customer->email_cliente = $request->email_cliente;
       $customer->telefono_cliente = $request->telefono_cliente;
       $customer->contacto_cliente = $request->contacto_cliente;
+      $customer->role_id = $request->role_id;
       $customer->slug = Str::slug($request->nombre_cliente);
       $customer->save();
 

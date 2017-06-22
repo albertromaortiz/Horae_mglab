@@ -38,20 +38,21 @@
 @foreach ($projects as $project)
 
   <tr>
-    <td>{{$project->codigo_proyecto}}</td>
+    <td>{{link_to_route('projects.show',$project->codigo_proyecto, array($project), array()) }} </td>
     <td>{{$project->fechaentrega_proyecto}}</td>
     <td>{{$project->user->name}}</td>
 
 @if ($project->estado_proyecto == 1)
-   <td><small class="label bg-green">En proceso</small></td>
+   <td><small class="label bg-yellow">En proceso</small></td>
  @elseif ($project->estado_proyecto == 2)
-      <td><small class="label bg-orange">En espera</small></td>
+      <td><small class="label bg-purple">En espera</small></td>
     @elseif ($project->estado_proyecto == 3)
-        <td><small class="label bg-purple">Para Facturar</small></td>
+        <td><small class="label bg-black">Para Facturar</small></td>
       @elseif ($project->estado_proyecto == 4)
-          <td><small class="label bg-red">Cerrado</small></td>
+          <td><small class="label bg-gray">Cerrado</small></td>
 @endif
-    <td>{{ link_to_route('projects.edit', 'Editar', array($project), array('class' => 'btn btn btn-warning btn-xs')) }}
+    <td>
+        {{ link_to_route('projects.edit', 'Editar', array($project), array('class' => 'btn btn btn-warning btn-xs')) }}
         {{ Form::open(array('method'=> 'DELETE', 'route' => array('projects.destroy', $project),'style'=>'display:inline')) }}
         {{ Form::submit('Eliminar', array('class' => 'btn btn btn-danger btn-xs')) }}
         {{ Form::close() }}
@@ -81,6 +82,10 @@
 @section('css')
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset("vendor/adminlte/plugins/datatables/dataTables.bootstrap.css")}}">
+    <link rel="stylesheet" href="{{asset("vendor/adminlte/plugins/datatables/extensions/Tabletools/css/dataTables.tableTools.css")}}">
+
+
+
 
 @stop
 
@@ -92,6 +97,9 @@
 
   <script src="{{asset("vendor/adminlte/plugins/datatables/jquery.dataTables.min.js")}}"> </script>
   <script src="{{asset("vendor/adminlte/plugins/datatables/dataTables.bootstrap.min.js")}}"> </script>
+    <script src="{{asset("vendor/adminlte/plugins/datatables/extensions/Tabletools/js/dataTables.tableTools.js")}}"> </script>
+
+
 
   <script>
     $(function () {
@@ -103,10 +111,21 @@
         "info": true,
         "stateSave": true,
         "responsive": true,
-
-
+        "pageLength": 50,
+        "displayLength": 50,
 
       });
     });
+
+
+
+
+
+
   </script>
+
+
+
+
+
 @stop

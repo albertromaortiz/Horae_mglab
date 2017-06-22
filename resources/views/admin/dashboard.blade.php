@@ -15,230 +15,11 @@
 
 @section('content')
 
-  <!-- Small boxes (Stat box) -->
-  <div class="row">
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-primary">
-        <div class="inner">
-          <h3>{{ $users->count() }}</h3>
-
-          <p>Usuarios</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-person-stalker"></i>
-        </div>
-        <a href="/admin/users" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-purple">
-        <div class="inner">
-          <h3>{{ $customers->count() }}</h3>
-
-          <p>Clientes</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-android-locate"></i>
-        </div>
-        <a href="/admin/customers" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-orange">
-        <div class="inner">
-          <h3>{{ $projects->count() }}</h3>
-
-          <p>Proyectos
-          </p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-folder"></i>
-        </div>
-        <a href="admin/projects" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-green">
-        <div class="inner">
-          <h3>{{ $tasks->count() }}</h3>
-
-          <p>Tareas</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-clipboard"></i>
-        </div>
-        <a href="admin/tasks" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
-      </div>
-    </div>
-
-
-    <!-- ./col -->
-
-  </div>
-  <!-- /.row -->
+  @include('admin.includes.box')
 
 
         <div class="row">
-  <div class="col-md-6">
-
-
-              <div class="box box">
-                              <div class="box-header" style="background-color:#F2F2F2">
-                                <h3 class="box-title">Mis tareas para esta semana</h3>
-
-                                <div class="box-tools pull-right">
-                                  <span data-toggle="tooltip" title="" class="badge bg-grey" data-original-title="{{ $tareassemana->count() }} Tareas">{{ $tareassemana->count() }}</span>
-                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                  </button>
-                                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                                  </button>
-                                </div>
-                              </div>
-                              <!-- /.box-header -->
-                              <div class="box-body" style="display: block;">
-
-
-                                <div class="box-body">
-                                  <div class="table-responsive">
-                                    <table class="table no-margin">
-                                      <thead>
-                                      <tr>
-                                        <th>Proyecto</th>
-                                        <th>Tarea</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
-                                      </tr>
-                                      </thead>
-                                      <tbody>
-
-
-
-                                      @foreach ($yo->tasks()->where('fechaentrega_tarea','<=', $estasemana)->where('estado_tarea','!=',4)->orderBy('fechaentrega_tarea', 'asc')->get() as $task)
-
-
-
-                                        <tr>
-                                          <td>{{$task->project->codigo_proyecto}}</td>
-                                          <td>{{ link_to_route('tasks.edit', $task->titulo_tarea, array($task) ) }}</td>
-
-                                          @if ($task->fechaentrega_tarea->toDateString() < $fechadehoy)
-
-                                              <td class="text-red">{{$task->fechaentrega_tarea->toDateString()}}</td>
-                                          @else
-                                              <td>{{$task->fechaentrega_tarea->toDateString()}}</td>
-                                          @endif
-
-                                          @if ($task->estado_tarea == 1)
-                                             <td><small class="label bg-green">En proceso</small></td>
-                                           @elseif ($task->estado_tarea == 2)
-                                                <td><small class="label bg-orange">En espera</small></td>
-                                              @elseif ($task->estado_tarea == 3)
-                                                  <td><small class="label bg-purple">En producción</small></td>
-                                                @elseif ($task->estado_tarea == 4)
-                                                    <td><small class="label bg-red">Cerrado</small></td>
-                                                  @elseif ($task->estado_tarea == 5)
-                                                      <td><small class="label bg-blue">Cliente</small></td>
-                                                    @elseif ($task->estado_tarea == 6)
-                                                        <td><small class="label bg-yellow">Por hacer</small></td>
-                                          @endif
-                                        </tr>
-
-                                        @endforeach
-
-
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                  <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.box-body -->
-
-
-
-                              </div>
-                              <!-- /.box-body -->
-
-                            </div>
-
-
-{{-- y ahora las tareas que faltan --}}
-
-<div class="box box ">
-                <div class="box-header" style="background-color:#F2F2F2">
-                  <h3 class="box-title">Más tareas</h3>
-
-                  <div class="box-tools pull-right">
-                    <span data-toggle="tooltip" title="" class="badge bg-grey" data-original-title="{{ $tareasparamastarde->count() }} Tareas">{{ $tareasparamastarde->count() }}</span>
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body" style="display: block;">
-
-
-                  <div class="box-body">
-                    <div class="table-responsive">
-                      <table class="table no-margin">
-                        <thead>
-                        <tr>
-                          <th>Proyecto</th>
-                          <th>Tarea</th>
-                          <th>Fecha</th>
-                          <th>Estado</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-
-
-                      @foreach ($yo->tasks()->where('fechaentrega_tarea','>', $estasemana)->where('estado_tarea','!=',4)->orderBy('fechaentrega_tarea', 'asc')->get() as $task)
-
-
-                          <tr>
-                            <td>{{$task->project->codigo_proyecto}}</td>
-                            <td>{{ link_to_route('tasks.edit', $task->titulo_tarea, array($task) ) }}</td>
-                            <td>{{$task->fechaentrega_tarea->toDateString()}}</td>
-                            @if ($task->estado_tarea == 1)
-                               <td><small class="label bg-green">En proceso</small></td>
-                             @elseif ($task->estado_tarea == 2)
-                                  <td><small class="label bg-orange">En espera</small></td>
-                                @elseif ($task->estado_tarea == 3)
-                                    <td><small class="label bg-purple">En producción</small></td>
-                                  @elseif ($task->estado_tarea == 4)
-                                      <td><small class="label bg-red">Cerrado</small></td>
-                                    @elseif ($task->estado_tarea == 5)
-                                        <td><small class="label bg-blue">Cliente</small></td>
-                                      @elseif ($task->estado_tarea == 6)
-                                          <td><small class="label bg-yellow">Por hacer</small></td>
-                            @endif
-                          </tr>
-
-                          @endforeach
-
-
-                        </tbody>
-                      </table>
-                    </div>
-                    <!-- /.table-responsive -->
-                  </div>
-                  <!-- /.box-body -->
-
-
-
-                </div>
-                <!-- /.box-body -->
-
-              </div>
+  @include('admin.includes.tareas')
 
 
 
@@ -246,30 +27,12 @@
 
 
 
-{{-- pie boton añadir tarea --}}
 
-              <div class="box-footer clearfix">
-                <a href="admin/tasks/create" class="btn btn-sm btn-success btn-flat pull-left">Nueva tarea</a>
-              </div>
-              <!-- /.box-footer -->
 
-          </div>
 
-                          <div class="col-md-6">
-                            <div class="box box">
-                                <!-- /.box-header -->
-                              <div class="box-body">
-                            <h2>{{$fechadehoy->format('l')}}</h2>
-                              <h1><strong>{{$fechadehoy->toDateString()}}</strong></h1>
 
-                              </div>
-                              <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-                          </div>
-                          <!-- ./col -->
 
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                   <div class="box box">
                     <div class="box-header with-border">
                       <i class="fa fa-quote-left"></i>
@@ -287,7 +50,22 @@
                   </div>
                   <!-- /.box -->
                 </div>
-                <!-- ./col -->
+                <!-- ./col --> --}}
+
+
+                <div class="col-md-6">
+                  <div class="box box">
+                    <div class="box-body no-padding">
+                      <!-- THE CALENDAR -->
+                      <div id="calendar"></div>
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <!-- /. box -->
+                </div>
+
+
+
 
 
 
@@ -309,6 +87,242 @@
 
 
 
+@stop
+
+@section('css')
+
+  <!-- fullCalendar 2.2.5-->
+  <link rel="stylesheet" href="{{asset("https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css")}}">
+  <link rel="stylesheet" href="{{asset("https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.print.css")}}" media="print">
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{asset("vendor/adminlte/plugins/datatables/dataTables.bootstrap.css")}}">
+
+@stop
+
+@section('js')
+
+  <!-- page script -->
 
 
+
+  <!-- fullCalendar 2.2.5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
+
+      <script src="{{asset("vendor/adminlte/plugins/fullcalendar/locale/es.js")}}"> </script>
+
+
+
+
+
+
+
+
+
+  <!-- DataTables -->
+  <script src="{{asset("vendor/adminlte/plugins/datatables/jquery.dataTables.min.js")}}"> </script>
+  <script src="{{asset("vendor/adminlte/plugins/datatables/dataTables.bootstrap.min.js")}}"> </script>
+
+
+
+<!-- calendario -->
+
+<script>
+  $(function () {
+
+
+    /* initialize the calendar
+     -----------------------------------------------------------------*/
+    //Date for the calendar events (dummy data)
+    var date = new Date();
+
+    $('#calendar').fullCalendar({
+
+      locale: "es",
+      nextDayThreshold: '00:00:00',
+
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      buttonText: {
+        today: 'Hoy',
+        month: 'mes',
+        week: 'semana',
+        day: 'dia'
+      },
+
+      //events
+      events: [
+
+        @foreach ($tareascalendario as $task)
+        {
+
+        title: '{{$task->titulo_tarea}}',
+        start: '{{$task->fechainicio_tarea->format('Y-m-d H:i:s')}}',
+        end: '{{$task->fechaentrega_tarea->format('Y-m-d H:i:s')}}',
+        url: '/admin/tasks/{{$task->id}}/edit',
+
+        @if ($task->estado_tarea == 1)
+           backgroundColor: "#f39c12", //
+           borderColor: "#f39c12", //red
+         @elseif ($task->estado_tarea == 2)
+         backgroundColor: "#605ca8 ", //red
+         borderColor: "#605ca8 ", //red
+            @elseif ($task->estado_tarea == 3)
+            backgroundColor: "#00a65a ", //red
+            borderColor: "#00a65a ", //red
+              @elseif ($task->estado_tarea == 4)
+              backgroundColor: "#b2d2d1", //red
+              borderColor: "#b2d2d1", //red
+                @elseif ($task->estado_tarea == 5)
+                backgroundColor: "#0073b7", //red
+                borderColor: "#0073b7", //red
+                  @elseif ($task->estado_tarea == 6)
+                  backgroundColor: "#dd4b39", //red
+                  borderColor: "#dd4b39", //red
+        @endif
+
+    
+
+        allDay: false,
+       },
+        @endforeach
+
+
+
+
+
+
+        // {
+        //   title: 'Long Event',
+        //   start: new Date(y, m, d - 5),
+        //   end: new Date(y, m, d - 2),
+        //   backgroundColor: "#f39c12", //yellow
+        //   borderColor: "#f39c12" //yellow
+        // },
+        // {
+        //   title: 'Meeting',
+        //   start: new Date(y, m, d, 10, 30),
+        //   allDay: false,
+        //   backgroundColor: "#0073b7", //Blue
+        //   borderColor: "#0073b7" //Blue
+        // },
+        // {
+        //   title: 'Lunch',
+        //   start: new Date(y, m, d, 12, 0),
+        //   end: new Date(y, m, d, 14, 0),
+        //   allDay: false,
+        //   backgroundColor: "#00c0ef", //Info (aqua)
+        //   borderColor: "#00c0ef" //Info (aqua)
+        // },
+        // {
+        //   title: 'Birthday Party',
+        //   start: new Date(y, m, d + 1, 19, 0),
+        //   end: new Date(y, m, d + 1, 22, 30),
+        //   allDay: false,
+        //   backgroundColor: "#00a65a", //Success (green)
+        //   borderColor: "#00a65a" //Success (green)
+        // },
+        // {
+        //   title: 'Click for Google',
+        //   start: new Date(y, m, 28),
+        //   end: new Date(y, m, 29),
+        //   url: 'http://google.com/',
+        //   backgroundColor: "#3c8dbc", //Primary (light-blue)
+        //   borderColor: "#3c8dbc" //Primary (light-blue)
+        // }
+      ],
+
+      editable: false,
+      droppable: false, // this allows things to be dropped onto the calendar !!!
+      drop: function (date, allDay) { // this function is called when something is dropped
+
+        // retrieve the dropped element's stored Event Object
+        var originalEventObject = $(this).data('eventObject');
+
+        // we need to copy it, so that multiple events don't have a reference to the same object
+        var copiedEventObject = $.extend({}, originalEventObject);
+
+        // assign it the date that was reported
+        copiedEventObject.start = date;
+        copiedEventObject.allDay = date;
+        copiedEventObject.backgroundColor = $(this).css("background-color");
+        copiedEventObject.borderColor = $(this).css("border-color");
+
+        // render the event on the calendar
+        // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+        $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+        // is the "remove after drop" checkbox checked?
+        if ($('#drop-remove').is(':checked')) {
+          // if so, remove the element from the "Draggable Events" list
+          $(this).remove();
+        }
+
+      }
+    });
+
+    /* ADDING EVENTS */
+    var currColor = "#3c8dbc"; //Red by default
+    //Color chooser button
+    var colorChooser = $("#color-chooser-btn");
+    $("#color-chooser > li > a").click(function (e) {
+      e.preventDefault();
+      //Save color
+      currColor = $(this).css("color");
+      //Add color effect to button
+      $('#add-new-event').css({"background-color": currColor, "border-color": currColor});
+    });
+    $("#add-new-event").click(function (e) {
+      e.preventDefault();
+      //Get value and make sure it is not null
+      var val = $("#new-event").val();
+      if (val.length == 0) {
+        return;
+      }
+
+      //Create events
+      var event = $("<div />");
+      event.css({"background-color": currColor, "border-color": currColor, "color": "#fff"}).addClass("external-event");
+      event.html(val);
+      $('#external-events').prepend(event);
+
+      //Add draggable funtionality
+      ini_events(event);
+
+      //Remove event from text input
+      $("#new-event").val("");
+    });
+  });
+</script>
+
+
+
+
+<!-- fin calendario-->
+
+
+
+  <script>
+    $(function () {
+      $('#list').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "stateSave": true,
+        "responsive": true,
+        "pageLength": 50,
+        "displayLength": 50,
+
+
+
+
+      });
+    });
+  </script>
 @stop

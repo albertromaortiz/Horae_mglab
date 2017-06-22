@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Project;
 use App\Customer;
 use App\User;
+use App\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
+use Carbon\Carbon;
+use Auth;
+use DB;
 
 class HoraeProjectController extends Controller
 {
@@ -17,8 +21,9 @@ class HoraeProjectController extends Controller
    */
   public function index()
   {
+
     $customers = Customer::all();
-    $projects = Project::all();
+    $projects = Project::where('role_id','=',Auth::user()->role_id)->get();
     return view('admin.projects.list_projects', compact('projects', 'customers'));
   }
 
@@ -29,8 +34,10 @@ class HoraeProjectController extends Controller
    */
   public function create()
   {
-    $customers = Customer::pluck( 'nombre_cliente', 'id');
-    $users = User::pluck( 'name', 'id');
+
+    $customers = Customer::select(DB::raw("concat(codigo_cliente, '_',nombre_cliente) as cono_cliente"),'id')->where('role_id','=',Auth::user()->role_id)->orderBy('codigo_cliente', 'asc')->pluck( 'cono_cliente', 'id');
+
+    $users = User::where('role_id','=',Auth::user()->role_id)->orderBy('name', 'asc')->pluck( 'name', 'id');
 
     return view('admin.projects.form_ins_projects', compact('customers', 'users'));
   }
@@ -57,6 +64,8 @@ class HoraeProjectController extends Controller
     $project->estado_proyecto = $request->estado_proyecto;
     $project->fechaentrega_proyecto = $request->fechaentrega_proyecto;
     $project->comentario_proyecto = $request->comentario_proyecto;
+    $project->role_id = $request->role_id;
+
     $project->slug = Str::slug($CodigoClienteSeleccionado->codigo_cliente . '_' .$request->titulo_proyecto);
     $project->save();
 
@@ -70,9 +79,18 @@ class HoraeProjectController extends Controller
    * @param  \App\Customer  $customer
    * @return \Illuminate\Http\Response
    */
-  public function show(Project $project)
+  public function show(Request $request, Project $project)
   {
-      //
+    $customers = Customer::where('role_id','=',Auth::user()->role_id)->pluck( 'nombre_cliente', 'id');
+    $users = User::pluck( 'name', 'id');
+    
+    $fechadehoy = Carbon::yesterday('Europe/Madrid');
+
+    $cuentatareas =  $project->tasks()->count();
+
+
+
+    return view('admin.projects.show_projects', compact('customers', 'users', 'fechadehoy', 'cuentatareas'))->withProject($project);
   }
 
   /**
@@ -83,8 +101,8 @@ class HoraeProjectController extends Controller
    */
   public function edit(Project $project)
   {
-    $customers = Customer::pluck( 'nombre_cliente', 'id');
-    $users = User::pluck( 'name', 'id');
+    $customers = Customer::select(DB::raw("concat(codigo_cliente, '_',nombre_cliente) as cono_cliente"),'id')->where('role_id','=',Auth::user()->role_id)->orderBy('codigo_cliente', 'asc')->pluck( 'cono_cliente', 'id');
+    $users = User::where('role_id','=',Auth::user()->role_id)->orderBy('name', 'asc')->pluck( 'name', 'id');
     return view('admin.projects.form_edit_projects', compact('customers', 'users'))->withProject($project);
   }
 

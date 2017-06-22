@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use Hash;
 
 use App\User;
+use App\Role;
+use Image;
+use Storage;
+use File;
+use URL;
+use Redirect;
 
 
 class HoraeUserController extends Controller
@@ -28,7 +34,9 @@ class HoraeUserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.form_ins_usuarios');
+
+        $roles = Role::pluck( 'role_name', 'id');
+        return view('admin.users.form_ins_usuarios', compact('roles'));
     }
 
     /**
@@ -39,16 +47,35 @@ class HoraeUserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new user;
+      $user = new user;
+
+
+
+      if($request->hasFile('avatar')){
+      $avatar = $request->file('avatar');
+      $filename = time() . '.' . $avatar->getClientOriginalExtension();
+      Image::make($avatar)->fit(160, 160, function ($constraint) {
+          $constraint->upsize();
+      })->save('images/avatar/'.$filename );
+      $user->avatar = $filename;
+    }
+
+
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->role_id = $request->role_id;
         $password = Hash::make($request->password);
         $user->password = $password;
+
         $user->save();
 
+
+
         return redirect('admin/users');
-    }
+
+
+  }
 
     /**
      * Display the specified resource.
@@ -70,8 +97,9 @@ class HoraeUserController extends Controller
     public function edit($id)
     {
       $user = User::findOrFail($id);
+      $roles = Role::pluck( 'role_name', 'id');
 
-      return view('admin.users.form_edit_usuarios')->withUser($user);
+      return view('admin.users.form_edit_usuarios', compact('roles'))->withUser($user);
     }
 
     /**
@@ -83,9 +111,24 @@ class HoraeUserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
       $user = User::findOrFail($id);
+
+      $avataractual = $user->avatar;
+
+      if($request->hasFile('avatar')){
+      File::delete('images/avatar/'.$avataractual);
+      $avatar = $request->file('avatar');
+      $filename = time() . '.' . $avatar->getClientOriginalExtension();
+      Image::make($avatar)->fit(160, 160, function ($constraint) {
+      $constraint->upsize();
+      })->save('images/avatar/'.$filename );
+        $user->avatar=$filename;
+      }
+
       $user->name=$request->name;
       $user->email=$request->email;
+      $user->role_id = $request->role_id;
       $user->save();
 
       return redirect('admin/users');
@@ -100,8 +143,11 @@ class HoraeUserController extends Controller
     public function destroy($id)
     {
       $user = User::findOrFail($id);
+      $avataractual = $user->avatar;
+      File::delete('images/avatar/'.$avataractual);
       $user->delete();
 
       return redirect('admin/users');
+
     }
 }

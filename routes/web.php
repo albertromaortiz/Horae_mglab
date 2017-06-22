@@ -18,6 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/testboot', function () {
+    return view('testboot');
+});
+
+
+
+
 
 Auth::routes();
 
@@ -31,6 +38,10 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth' ], function () {
             Route::resource('/customers', 'HoraeCustomerController');
             Route::resource('/projects', 'HoraeProjectController');
             Route::resource('/tasks', 'HoraeTaskController');
+                Route::get('/tasks_WhithProject/{project}', 'HoraeTaskController@create_WhithProject')->name('create_WhithProject');
+            Route::resource('/hist', 'HoraeTaskHistController');
+            Route::get('/calendar', 'HoraeTaskCalendarController@index');
+
 
         //   Route::get('/list_usuarios', 'HomeController@list_usuarios');
         //   Route::get('/form_usuarios', 'HomeController@form_usuarios');

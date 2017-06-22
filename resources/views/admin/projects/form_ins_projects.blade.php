@@ -85,7 +85,7 @@
 
                 </div>
 
-
+              {{Form::hidden('role_id', Auth::user()->role_id)}}
 
 
               </div>
@@ -128,6 +128,8 @@
 //Date picker
 $('#fechaentrega_proyecto').datepicker({
   autoclose: true,
+  todayHighlight :true,
+  weekStart : 1,
   language: 'es',
   format: "yy-mm-dd",
 });
